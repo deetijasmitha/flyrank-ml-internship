@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Content Performance and Refresh Prioritization</title>
+  <title>Content Performance and Refresh Prioritization | FlyRank ML Internship</title>
 
   <style>
     * {
@@ -171,6 +171,11 @@
       font-size: 14px;
     }
 
+    .highlight {
+      font-weight: bold;
+      color: #594735;
+    }
+
     footer {
       text-align: center;
       padding: 25px;
@@ -213,8 +218,12 @@
   <div class="container">
 
     <!-- TITLE -->
+
     <header>
-      <div class="tag">FlyRank ML Internship · Research Paper</div>
+
+      <div class="tag">
+        FlyRank ML Internship · Research Paper
+      </div>
 
       <h1>
         Using Content Performance Signals to Prioritize Content Review
@@ -226,16 +235,21 @@
       </p>
 
       <p>
-        <strong>Analysis window:</strong> February 2026 → March 2026
+        <strong>Analysis window:</strong>
+        February 2026 → March 2026
       </p>
+
     </header>
 
 
     <!-- ABSTRACT -->
+
     <section>
+
       <h2>Abstract</h2>
 
       <div class="abstract">
+
         <p>
           This study asks whether February 2026 content-performance signals
           can help identify content that went dark in March 2026.
@@ -249,8 +263,9 @@
 
         <p>
           A Logistic Regression model was evaluated using a client-grouped
-          test split and achieved a ROC-AUC of <strong>0.7056</strong>,
-          compared with <strong>0.5736</strong> for the rule-based baseline.
+          test split and achieved a ROC-AUC of
+          <strong>0.7056</strong>, compared with
+          <strong>0.5736</strong> for the rule-based baseline.
         </p>
 
         <p>
@@ -262,12 +277,16 @@
           The findings are intended for decision support and do not establish
           causality or guarantee future performance.
         </p>
+
       </div>
+
     </section>
 
 
-    <!-- 1 -->
+    <!-- SECTION 1 -->
+
     <section>
+
       <h2>1. Introduction / Problem</h2>
 
       <h3>Research question</h3>
@@ -291,11 +310,14 @@
         signals for prioritization and does not claim that the observed
         signals cause future performance changes.
       </p>
+
     </section>
 
 
-    <!-- 2 -->
+    <!-- SECTION 2 -->
+
     <section>
+
       <h2>2. Data</h2>
 
       <h3>Data source</h3>
@@ -314,6 +336,7 @@
       </p>
 
       <div class="metric-grid">
+
         <div class="metric">
           <strong>9,841,378</strong>
           <span>March daily records</span>
@@ -328,6 +351,7 @@
           <strong>331,437</strong>
           <span>Content items</span>
         </div>
+
       </div>
 
       <p>
@@ -364,6 +388,7 @@
       </p>
 
       <div class="metric-grid">
+
         <div class="metric">
           <strong>29,729</strong>
           <span>Eligible records</span>
@@ -378,18 +403,36 @@
           <strong>1,531</strong>
           <span>Went dark</span>
         </div>
+
       </div>
 
       <p>
         The model uses historical February features and does not use March
         outcome information as a model feature.
       </p>
+
+      <p>
+        Records without the required historical feature data were excluded
+        from the predictive modeling dataset.
+      </p>
+
     </section>
 
 
-    <!-- 3 -->
+    <!-- SECTION 3 -->
+
     <section>
+
       <h2>3. Methodology</h2>
+
+      <h3>Approach</h3>
+
+      <p>
+        February 2026 content-performance data was used as the historical
+        feature window and March 2026 was used as the outcome window.
+        The goal was to determine whether historical performance signals
+        could help identify content that went dark in the following month.
+      </p>
 
       <h3>Features</h3>
 
@@ -407,25 +450,39 @@
       <h3>Label definition</h3>
 
       <p>
-        The target variable is <span class="code">went_dark</span>.
+        The target variable is
+        <span class="code">went_dark</span>.
         A content-client record is labeled as 1 when its observed March GSC
         clicks are zero, and 0 otherwise.
+      </p>
+
+      <p>
+        The final eligible dataset contains
+        <strong>29,729 records</strong>, with
+        <strong>1,531 went-dark records</strong> and
+        <strong>28,198 not-dark records</strong>.
       </p>
 
       <h3>Model</h3>
 
       <p>
-        Logistic Regression was used as the main predictive model.
-        The model estimates whether a content-client record is likely to
-        go dark based on its February performance features.
+        A Logistic Regression classifier was used as the main predictive
+        model. The model estimates whether a content-client record is likely
+        to go dark based on its February performance features.
       </p>
 
       <h3>Baseline</h3>
 
       <p>
-        The baseline uses a simple performance scoring rule based on March
-        GSC clicks and average search position. Lower click performance and
-        weaker search position receive higher scores.
+        The baseline uses a simple performance scoring rule based on
+        observed March GSC clicks and average search position. Lower click
+        performance and weaker search position receive higher scores.
+      </p>
+
+      <p>
+        The baseline is used as a comparison and prioritization reference;
+        it is separate from the February feature set used by the predictive
+        Logistic Regression model.
       </p>
 
       <h3>Validation design</h3>
@@ -442,21 +499,36 @@
         <li>Client overlap: 0</li>
       </ul>
 
-      <h3>Leakage check</h3>
+      <h3>Leakage checks</h3>
 
       <p>
         The feature window was restricted to February 2026 while the outcome
-        was measured in March 2026. The validation audit found no leakage
-        columns.
+        was measured in March 2026. March outcome information was not used
+        as a model feature.
       </p>
+
+      <p>
+        The validation audit found no leakage columns.
+      </p>
+
+      <div class="note">
+        <strong>Methodology framing:</strong>
+        The methodology is intended to provide directional decision-support
+        evidence rather than a causal estimate or guarantee of future
+        performance.
+      </div>
+
     </section>
 
 
-    <!-- 4 -->
+    <!-- SECTION 4 -->
+
     <section>
+
       <h2>4. Results</h2>
 
       <div class="metric-grid">
+
         <div class="metric">
           <strong>0.7056</strong>
           <span>Logistic Regression ROC-AUC</span>
@@ -471,23 +543,31 @@
           <strong>+0.1320</strong>
           <span>ROC-AUC improvement</span>
         </div>
+
       </div>
 
       <h3>Model versus baseline</h3>
 
       <p>
-        The Logistic Regression model achieved a ROC-AUC of
-        <strong>0.7056</strong> on the client-grouped test set.
-        The baseline achieved <strong>0.5736</strong> on the same evaluation
-        split.
+        The Logistic Regression model achieved a
+        <strong>ROC-AUC of 0.7056</strong> on the client-grouped test set.
+        The baseline achieved a
+        <strong>ROC-AUC of 0.5736</strong> on the same evaluation split.
+      </p>
+
+      <p>
+        The model therefore improved ROC-AUC by
+        <strong>0.1320</strong> compared with the baseline.
       </p>
 
       <div class="result-box">
+
         <strong>ROC-AUC comparison</strong>
 
         <div class="bar-chart">
 
           <div class="bar-row">
+
             <div class="bar-label">
               <span>Baseline</span>
               <span>0.5736</span>
@@ -496,9 +576,11 @@
             <div class="bar-bg">
               <div class="bar baseline"></div>
             </div>
+
           </div>
 
           <div class="bar-row">
+
             <div class="bar-label">
               <span>Logistic Regression</span>
               <span>0.7056</span>
@@ -507,10 +589,20 @@
             <div class="bar-bg">
               <div class="bar model"></div>
             </div>
+
           </div>
 
         </div>
+
       </div>
+
+      <h3>Validation context</h3>
+
+      <p>
+        The evaluation used a client-grouped test set containing
+        <strong>7,649 records across 7 clients</strong>, with no client
+        overlap between the training and test sets.
+      </p>
 
       <h3>Interpretation</h3>
 
@@ -526,18 +618,28 @@
       </p>
 
       <div class="note">
+
         <strong>Important:</strong>
         This result is not a causal claim and does not guarantee that the
         model will predict future content decline with the same performance.
+
       </div>
+
     </section>
 
 
-    <!-- 5 -->
+    <!-- SECTION 5 -->
+
     <section>
+
       <h2>5. Limitations &amp; Honest Framing</h2>
 
+      <p>
+        This analysis has several important limitations.
+      </p>
+
       <ul>
+
         <li>
           The analysis uses a limited February-to-March 2026 time window,
           so the results may not generalize to other periods.
@@ -551,22 +653,26 @@
         </li>
 
         <li>
-          GSC and GA4 availability is uneven across the dataset.
+          GSC and GA4 availability is uneven across the dataset, which
+          limits the completeness of some performance signals.
         </li>
 
         <li>
-          The test set contains only 7 clients, so performance estimates may
-          vary on other client populations.
+          The validation uses a client-grouped split, but the test set
+          contains only 7 clients, so performance estimates may vary on
+          other client populations.
         </li>
 
         <li>
-          The Logistic Regression model provides predictive evidence but does
-          not establish that the input features cause content to go dark.
+          The Logistic Regression model provides predictive evidence but
+          does not establish that the input features cause content to go
+          dark.
         </li>
 
         <li>
-          The baseline is a simple rule-based scoring approach intended for
-          comparison and prioritization.
+          The baseline is a simple rule-based scoring approach and is
+          intended for comparison and prioritization rather than as a
+          production decision system.
         </li>
 
         <li>
@@ -579,19 +685,27 @@
           Human review is required before any refresh, rewrite,
           consolidation, deletion, or other content action.
         </li>
+
       </ul>
 
       <div class="note">
+
         <strong>Honest framing:</strong>
-        The results should be interpreted as directional decision-support
-        evidence. They do not establish causality or guarantee future
-        performance.
+        The results should therefore be interpreted as
+        <span class="highlight">directional decision-support evidence</span>.
+        They show that the evaluated model performed better than the baseline
+        on the measured client-grouped test set, but they do not prove
+        causality or guarantee future performance.
+
       </div>
+
     </section>
 
 
-    <!-- 6 -->
+    <!-- SECTION 6 -->
+
     <section>
+
       <h2>6. Ranked Recommendations</h2>
 
       <p>
@@ -600,6 +714,7 @@
       </p>
 
       <div class="metric-grid">
+
         <div class="metric">
           <strong>176,738</strong>
           <span>Content-client records</span>
@@ -612,8 +727,9 @@
 
         <div class="metric">
           <strong>1</strong>
-          <span>Primary action</span>
+          <span>Primary recommended action</span>
         </div>
+
       </div>
 
       <h3>Prioritization approach</h3>
@@ -650,16 +766,21 @@
       </p>
 
       <div class="note">
+
         <strong>Decision-support only:</strong>
-        The ranked queue does not automatically determine the correct content
-        action.
+        The ranked queue supports prioritization but does not automatically
+        determine the correct content action.
+
       </div>
+
     </section>
 
 
-    <!-- 7 -->
+    <!-- SECTION 7 -->
+
     <section>
-      <h2>7. Artifacts &amp; Reproducibility</h2>
+
+      <h2>7. Reproducibility</h2>
 
       <p>
         The analysis is organized as a sequence of weekly notebooks covering
@@ -671,14 +792,74 @@
       <h3>Project information</h3>
 
       <ul>
-        <li>Repository: deetijasmitha/flyrank-ml-internship</li>
-        <li>Model: Logistic Regression</li>
-        <li>Validation: client-grouped GroupShuffleSplit</li>
-        <li>Random state: 42</li>
-        <li>Final model ROC-AUC: 0.7056</li>
-        <li>Baseline ROC-AUC: 0.5736</li>
-        <li>Action playbook: 176,738 ranked records</li>
+
+        <li>
+          Repository:
+          deetijasmitha/flyrank-ml-internship
+        </li>
+
+        <li>
+          Model: Logistic Regression
+        </li>
+
+        <li>
+          Validation: client-grouped GroupShuffleSplit
+        </li>
+
+        <li>
+          Grouping variable: client_hash_id
+        </li>
+
+        <li>
+          Random state: 42
+        </li>
+
+        <li>
+          Historical feature window: February 2026
+        </li>
+
+        <li>
+          Outcome window: March 2026
+        </li>
+
+        <li>
+          Test size: 20%
+        </li>
+
+        <li>
+          Final model ROC-AUC: 0.7056
+        </li>
+
+        <li>
+          Baseline ROC-AUC: 0.5736
+        </li>
+
+        <li>
+          Action playbook: 176,738 ranked content-client records
+        </li>
+
       </ul>
+
+      <h3>Validation and rerun information</h3>
+
+      <p>
+        The workflow includes data validation, leakage checks, model
+        validation, baseline comparison, and action-playbook generation.
+      </p>
+
+      <p>
+        The validation uses
+        <span class="code">client_hash_id</span>
+        as the grouping variable, with a 20% test size and random state 42.
+        The final test set contains 7,649 records across 7 clients with no
+        client overlap between training and test sets.
+      </p>
+
+      <p>
+        Re-running the project should use the same documented feature window,
+        outcome definition, validation grouping, and random seed when
+        reproducing the reported evaluation.
+      </p>
 
       <h3>Public-safe reporting</h3>
 
@@ -693,45 +874,15 @@
         for the methodology, validation, results, and ranked recommendations
         described in this paper.
       </p>
+
     </section>
 
 
-    <!-- 8 -->
+    <!-- SECTION 8 -->
+
     <section>
-      <h2>8. Reproducibility</h2>
 
-      <p>
-        The analysis was developed in Google Colab and organized into the
-        FlyRank internship notebook workflow.
-      </p>
-
-      <ul>
-        <li>Historical feature window: February 2026</li>
-        <li>Outcome window: March 2026</li>
-        <li>Model: Logistic Regression</li>
-        <li>Grouped validation: client_hash_id</li>
-        <li>Test size: 20%</li>
-        <li>Random state: 42</li>
-        <li>Final model ROC-AUC: 0.7056</li>
-        <li>Baseline ROC-AUC: 0.5736</li>
-      </ul>
-
-      <p>
-        The workflow includes data validation, leakage checks, model
-        validation, baseline comparison, and action-playbook generation.
-      </p>
-
-      <p>
-        Re-running the project should use the same documented feature window,
-        outcome definition, validation grouping, and random seed when
-        reproducing the reported evaluation.
-      </p>
-    </section>
-
-
-    <!-- 9 -->
-    <section>
-      <h2>9. Acknowledgments &amp; Data Credit</h2>
+      <h2>8. Acknowledgments &amp; Data Credit</h2>
 
       <p>
         This work was completed as part of the FlyRank ML Internship.
@@ -751,15 +902,24 @@
 
       <p>
         <strong>Data credit:</strong>
-        <a href="https://flyrank.ai" target="_blank" rel="noopener">
+        <a
+          href="https://flyrank.ai"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           FlyRank AI
         </a>
       </p>
+
     </section>
 
 
+    <!-- FOOTER -->
+
     <footer>
+
       FlyRank ML Internship · Content Performance Decision-Support Research
+
     </footer>
 
   </div>
